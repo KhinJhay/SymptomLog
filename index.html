@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>SymptomLog — Listen to Your Body</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=Nunito:wght@300;400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-wave bg-wave1"></div>
+    <div class="bg-wave bg-wave2"></div>
+
+    <nav>
+        <div class="nav-logo"><div class="pulse-dot"></div>SymptomLog</div>
+        <div class="nav-r">
+            <button class="settings-btn" onclick="openSettings()">⚙</button>
+            <a href="https://www.linkedin.com/in/" target="_blank" class="connect-btn">Connect With Me</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-pill">💜 Personal Health Journal</div>
+        <h1>Listen to<br><em>Your Body.</em></h1>
+        <p class="hero-sub">Track symptoms over time, spot hidden patterns, and bring real data to your next doctor visit.</p>
+        <div class="hero-tags">
+            <span class="hero-tag">🔒 Stored locally only</span>
+            <span class="hero-tag">📊 Pattern insights</span>
+            <span class="hero-tag">🏥 Doctor-ready export</span>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="log-form">
+            <div class="form-date-row">
+                📅 <input type="date" id="logDate"/>
+                🕐 <input type="time" id="logTime"/>
+            </div>
+
+            <div style="font-size:13px;font-family:var(--mono);color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px">What are you experiencing?</div>
+            <div class="symptom-grid" id="symptomGrid"></div>
+            
+            <div style="display:flex;gap:8px;margin-bottom:20px">
+                <input style="flex:1;background:var(--lavender);border:1.5px solid var(--lavender2);border-radius:12px;padding:10px 16px;font-family:var(--sans);font-size:14px;outline:none;color:var(--ink)" placeholder="Other symptom..." id="customSym"/>
+            </div>
+
+            <div class="intensity-section">
+                <div class="int-label">INTENSITY LEVEL</div>
+                <input type="range" class="intensity-slider" id="intensity" min="1" max="10" value="5" oninput="updateIntensity()"/>
+                <div class="intensity-labels"><span>Mild 😌</span><span>Moderate 😐</span><span>Severe 😣</span></div>
+                <div class="intensity-value" id="intensityVal">5 / 10</div>
+            </div>
+
+            <div class="context-grid">
+                <div class="ctx-field"><span class="ctx-label">Sleep last night</span><select class="ctx-select" id="logSleep"><option value="">Select...</option><option>&lt; 4 hrs</option><option>4–6 hrs</option><option>6–8 hrs</option><option>8+ hrs</option></select></div>
+                <div class="ctx-field"><span class="ctx-label">Did you eat?</span><select class="ctx-select" id="logEat"><option value="">Select...</option><option>Skipped breakfast</option><option>Light meal</option><option>Normal meals</option><option>Heavy/Junk food</option></select></div>
+                <div class="ctx-field"><span class="ctx-label">Stress level</span><select class="ctx-select" id="logStress"><option value="">Select...</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></div>
+                <div class="ctx-field"><span class="ctx-label">Water intake</span><select class="ctx-select" id="logWater"><option value="">Select...</option><option>Very little</option><option>Some (2–4 glasses)</option><option>Good (6–8 glasses)</option><option>Lots (8+ glasses)</option></select></div>
+            </div>
+
+            <textarea class="notes-input" id="logNotes" placeholder="Describe what you're feeling..." rows="3"></textarea>
+            <button class="log-btn" onclick="logEntry()">+ Log This Symptom</button>
+        </div>
+
+        <div id="patternsCard" style="display:none">
+            <div class="section-head"><div class="section-title">Patterns I see 🔍</div></div>
+            <div class="patterns-card" id="patternsInner"></div>
+        </div>
+
+        <div class="section-head">
+            <div class="section-title">Your log</div>
+            <div class="section-count" id="entryCount">0 entries</div>
+        </div>
+        <div id="entriesList"></div>
+    </div>
+
+    <!-- SETTINGS SHEET -->
+    <div class="settings-overlay" id="settingsOverlay" onclick="closeSettingsOutside(event)">
+        <div class="settings-sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-title">Your Preferences</div>
+            <div class="sheet-row"><div><div class="sheet-label">Dark Mode</div><div class="sheet-sub">Easier on eyes</div></div><button class="toggle" id="themeToggle" onclick="toggleTheme()"></button></div>
+            <div class="sheet-row"><div><div class="sheet-label">Show Pattern Insights</div></div><button class="toggle on" id="patternToggle" onclick="togglePatterns()"></button></div>
+            <div class="sheet-row"><button onclick="exportLog()" style="background:var(--lavender);color:var(--purple);border:none;border-radius:100px;padding:12px 24px;width:100%;cursor:pointer">📄 Export for Doctor</button></div>
+            <div class="sheet-row"><button onclick="clearLog()" style="background:var(--rose);color:var(--pink);border:none;border-radius:100px;padding:12px 24px;width:100%;cursor:pointer">🗑 Clear All</button></div>
+        </div>
+    </div>
+
+    <footer>SymptomLog · Data lives on your device</footer>
+    <script src="script.js"></script>
+</body>
+</html>
